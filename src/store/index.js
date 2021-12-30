@@ -5,6 +5,9 @@ export const useStore = defineStore("main", {
     return {
       name: "abcd",
       cartData: [],
+      counter: 1,
+      discount: "",
+      total: "",
       sum: "",
       selectedItem: "",
       data: [
@@ -13,9 +16,9 @@ export const useStore = defineStore("main", {
           title: "CAT Engine",
           description:
             "Lorem ipsum dolor sit amet, consectetur  dignissimos suscipit voluptatibus distinctio, error nostrum expedita omnis ipsum sit inventore aliquam sunt quam quis! ",
-          price: 550.9,
+          price: 550.0,
           image_tag: require("../assets/5.jpg"),
-
+          quantity: 1,
           done: false,
         },
         {
@@ -23,9 +26,9 @@ export const useStore = defineStore("main", {
           title: "SEFANG Engine",
           description:
             "Lorem ipsum dolor sit amet, consectetur  dignissimos suscipit voluptatibus distinctio, error nostrum expedita omnis ipsum sit inventore aliquam sunt quam quis!",
-          price: 619.9,
+          price: 619.5,
           image_tag: require("../assets/cloud.jpeg"),
-
+          quantity: 1,
           done: false,
         },
         {
@@ -33,9 +36,9 @@ export const useStore = defineStore("main", {
           title: "MIKANO Engine",
           description:
             "Lorem ipsum dolor sit amet, consectetur  dignissimos suscipit voluptatibus distinctio, error nostrum expedita omnis ipsum sit inventore aliquam sunt quam quis! ",
-          price: 650.9,
+          price: 650.0,
           image_tag: require("../assets/3.jpeg"),
-
+          quantity: 1,
           done: false,
         },
         {
@@ -43,9 +46,9 @@ export const useStore = defineStore("main", {
           title: "MATINE Engine",
           description:
             "Lorem ipsum dolor sit amet, consectetur  dignissimos suscipit voluptatibus distinctio, error nostrum expedita omnis ipsum sit inventore aliquam sunt quam quis!",
-          price: 600.9,
+          price: 600.5,
           image_tag: require("../assets/5.jpg"),
-
+          quantity: 1,
           done: false,
         },
         {
@@ -53,8 +56,9 @@ export const useStore = defineStore("main", {
           title: "SAFFRON Engine",
           description:
             "Lorem ipsum dolor sit amet, consectetur  dignissimos suscipit voluptatibus distinctio, error nostrum expedita omnis ipsum sit inventore aliquam sunt quam quis!",
-          price: 720.9,
+          price: 720.0,
           image_tag: require("../assets/about.jpg"),
+          quantity: 1,
           done: false,
         },
         {
@@ -62,9 +66,9 @@ export const useStore = defineStore("main", {
           title: "META Engine",
           description:
             "Lorem ipsum dolor sit amet, consectetur  dignissimos suscipit voluptatibus distinctio, error nostrum expedita omnis ipsum sit inventore aliquam sunt quam quis!",
-          price: 860.9,
+          price: 860.5,
           image_tag: require("../assets/about1.jpg"),
-
+          quantity: 1,
           done: false,
         },
         {
@@ -72,37 +76,30 @@ export const useStore = defineStore("main", {
           title: "CATONE Engine",
           description:
             "Lorem ipsum dolor sit amet, consectetur  dignissimos suscipit voluptatibus distinctio, error nostrum expedita omnis ipsum sit inventore aliquam sunt quam quis!",
-          price: 250.9,
+          price: 250.2,
           image_tag: require("../assets/4.jpeg"),
-
+          quantity: 1,
           done: false,
         },
       ],
     };
   },
   getters: {
-    // getDataById: (state, id) => {
-    //   const result = state.data.find((it) => {
-    //     it.id === id;
-    //   });
-    //   return result;
-    // },
     cartLength: (state) => state.cartData.length,
-
-    // getCartData(state, id) {
-    //   const result = state.cartData.find((it) => {
-    //     return it.id === id;
-    //   });
-    totalAmount:(state) => {
-    
-      this.cartData.filter((e) => {
-        console.log("e", e);
+    totalAmount: (state) => {
+      let sum = 0;
+      state.cartData.filter((e) => {
         if (e.price) {
-          sum += e.price;
-          console.log(sum);
-          return sum;
+          sum += e.price * e.quantity;
+
+          state.total = sum;
         }
       });
+      return sum;
+    },
+    discountValue: (state) => {
+      let result = (state.total * state.discount) / 100;
+      return result;
     },
   },
   actions: {
@@ -117,7 +114,6 @@ export const useStore = defineStore("main", {
       this.data.find((it) => {
         if (it.id == id) {
           this.selectedItem = it;
-
           return it;
         }
       });
@@ -126,16 +122,17 @@ export const useStore = defineStore("main", {
       let index = this.cartData.findIndex((it) => it.id === id);
       this.cartData.splice(index, 1);
     },
-    // totalAmount() {
-    //   // let sum = 0;
-    //   this.cartData.filter((e) => {
-    //     console.log("e", e);
-    //     if (e.price) {
-    //       this.sum += e.price;
-    //       console.log(this.sum);
-    //       return this.sum;
-    //     }
-    //   });
-    // },
+    quantity() {
+      this.counter++;
+    },
+    buy(id) {
+      this.cartData.find((it) => {
+        if (it.id === id) {
+          it.done = true;
+        }
+      });
+
+      alert("buy succesfully");
+    },
   },
 });
