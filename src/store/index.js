@@ -99,7 +99,8 @@ export const useStore = defineStore("main", {
     },
     discountValue: (state) => {
       let result = (state.total * state.discount) / 100;
-      return result;
+      let res = state.totalAmount - result;
+      return res;
     },
   },
   actions: {

@@ -9,12 +9,12 @@ import CartData from '../views/CartData.vue'
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'dashboard',
+    component: Dashboard
   },
 
   {
-    path:'/dashboard',
+    path:'/',
     name: 'dashboard',
     component: Dashboard
   },

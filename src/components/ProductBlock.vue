@@ -19,20 +19,19 @@
       >
         Add to cart
       </button>
-      <!-- :class="`${(store.data.addToCart = true ? 'bg-red-100' : 'bg-yellow-100')}`" -->
+  
       <button
         class="shadow-sm text-white leading-4 bg-gray-500 hover:bg-gray-700 hover:shadow-lg w-1/2 rounded-md focus:ring-gray-500 text-lg p-3 mr-2"
         @click="buy(props.data.id)"
       >
         Buy now
       </button>
-      <!-- <BaseButton class="bg-gray-700 h-9"> Add To Cart </BaseButton> -->
+
     </div>
   </div>
 </template>
 
 <script setup>
-import BaseButton from "./BaseBtn.vue";
 import { useStore } from "../store/index";
 import { useRouter } from "vue-router";
 import { computed } from "vue";
@@ -52,7 +51,7 @@ const alreadyInCart = computed(() => {
 });
 function buy(id) {
   router.push(`/cartitem/${id}`);
-  // console.log(store);
+
   store.getItem(id);
 
 }
